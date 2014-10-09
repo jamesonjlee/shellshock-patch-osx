@@ -21,7 +21,7 @@ include /usr/local/share/luggage/luggage.make
 TITLE=shellshock_updater
 REVERSE_DOMAIN=net.unixorn
 PAYLOAD=bash sh pack-bin-bash pack-bin-sh
-SOURCES=bash-92.tar.gz bash32-052 bash32-053 bash32-054
+SOURCES=bash-92.tar.gz bash32-052 bash32-053 bash32-054 bash32-055 bash32-056 bash32-057
 
 .PHONY: apply_patches
 .PHONY: bake_bash
@@ -39,7 +39,7 @@ bash_tarball: bash-92.tar.gz
 bash-92.tar.gz:
 	@curl -O https://opensource.apple.com/tarballs/bash/bash-92.tar.gz
 
-bash_patches: bash32-052 bash32-053 bash32-054
+bash_patches: bash32-052 bash32-053 bash32-054 bash32-055 bash32-056 bash32-057
 
 bash32-052:
 	@curl -O http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-052
@@ -50,6 +50,15 @@ bash32-053:
 bash32-054:
 	@curl -O http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-054
 
+bash32-055:
+	@curl -O http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-055
+
+bash32-056:
+	@curl -O http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-056
+
+bash32-057:
+	@curl -O http://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-057
+
 burst_tarball: ${SOURCES}
 	@tar xvzf bash-92.tar.gz
 
@@ -57,6 +66,9 @@ apply_patches: burst_tarball bash_patches
 	cd bash-92/bash-3.2; patch -p0 < ../../bash32-052
 	cd bash-92/bash-3.2; patch -p0 < ../../bash32-053
 	cd bash-92/bash-3.2; patch -p0 < ../../bash32-054
+	cd bash-92/bash-3.2; patch -p0 < ../../bash32-055
+	cd bash-92/bash-3.2; patch -p0 < ../../bash32-056
+	cd bash-92/bash-3.2; patch -p0 < ../../bash32-057
 
 bake_bash: sources
 	cd bash-92; time xcodebuild
